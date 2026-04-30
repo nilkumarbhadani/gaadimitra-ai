@@ -21,12 +21,30 @@ It helps users find the best car based on their budget, preferences, and lifesty
 
 ---
 
+## 🚀 Key Highlights
+
+- Built and deployed independently
+- Real-time AI chatbot integration
+- Handles edge cases in recommendations
+- Designed for real-world usage (not just demo)
+
+---
+
 ## 🧠 Key Learning  
 
 - Handling AI model inconsistencies and hallucinations  
 - Prompt engineering for better accuracy  
 - Balancing response speed and quality  
 - Debugging real-world issues during deployment  
+
+---
+
+## ▶️ How to Use
+
+1. Open the live demo link  
+2. Click on "Start Chat Now"  
+3. Enter your budget or car preference  
+4. Get AI-powered recommendations
 
 ---
 
@@ -44,8 +62,6 @@ It helps users find the best car based on their budget, preferences, and lifesty
 <img width="1470" height="774" alt="Interface" src="https://github.com/user-attachments/assets/444bbd30-60cf-4f1f-99c5-87134b13a80d" />
 
 <img width="1173" height="760" alt="Advance output " src="https://github.com/user-attachments/assets/c221bd66-80e8-45fe-b04e-8d3052fcf398" />
-
-
 
 ---
 
