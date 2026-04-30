@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaadiMitra AI - Find Your Perfect Car</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1a2a4a 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* ── PARTICLES ── */
+        .particles {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; z-index: 0; pointer-events: none;
+        }
+        .particle {
+            position: absolute; width: 4px; height: 4px;
+            background: rgba(100,200,255,0.5); border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        @keyframes float {
+            0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            position: relative; z-index: 1;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+        }
+
+        /* ── HEADER ── */
+        header { padding: 30px 0; text-align: center; animation: slideDown 0.8s ease-out; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            font-size: 32px; font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 10px;
+            animation: glow 3s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%,100% { filter: drop-shadow(0 0 10px rgba(0,200,255,0.3)); }
+            50%      { filter: drop-shadow(0 0 22px rgba(0,200,255,0.65)); }
+        }
+
+        /* ── HERO ── */
+        .hero { padding: 70px 0 60px; text-align: center; }
+        .hero h1 {
+            font-size: 54px; font-weight: 800; margin-bottom: 20px; line-height: 1.2;
+            background: linear-gradient(135deg, #fff 0%, #00d4ff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: slideUp 0.8s ease-out 0.2s both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero p { font-size: 20px; color: #a0d4ff; margin-bottom: 40px; animation: slideUp 0.8s ease-out 0.4s both; }
+
+        /* ── BUTTONS ── */
+        .cta-buttons {
+            display: flex; gap: 20px; justify-content: center;
+            flex-wrap: wrap; margin-bottom: 60px;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+        .btn {
+            padding: 15px 40px; font-size: 16px; font-weight: 600;
+            border: 2px solid; border-radius: 50px; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            color: #0f172a; border-color: #00d4ff;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,212,255,0.4); }
+        .btn-secondary { background: transparent; color: #00d4ff; border-color: #00d4ff; }
+        .btn-secondary:hover { background: rgba(0,212,255,0.1); transform: translateY(-3px); }
+
+        /* ── FEATURES ── */
+        .features {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+            gap: 30px; margin-bottom: 50px;
+            animation: slideUp 0.8s ease-out 0.8s both;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(0,212,255,0.2);
+            padding: 40px 30px; border-radius: 15px; text-align: center;
+            transition: all 0.3s ease; backdrop-filter: blur(10px);
+        }
+        .feature-card:hover {
+            background: rgba(0,212,255,0.1); border-color: rgba(0,212,255,0.5);
+            transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,212,255,0.2);
+        }
+        .feature-icon { font-size: 48px; margin-bottom: 15px; display: block; animation: bounce 2s ease-in-out infinite; }
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-10px); }
+        }
+        .feature-card h3 { font-size: 20px; margin-bottom: 10px; color: #00d4ff; }
+        .feature-card p  { color: #a0d4ff; font-size: 14px; line-height: 1.6; }
+
+        /* ── DISCLAIMER BANNER ── */
+        .disclaimer-banner {
+            background: linear-gradient(135deg, rgba(255,165,0,0.1), rgba(255,100,0,0.08));
+            border: 1px solid rgba(255,165,0,0.35);
+            border-radius: 14px;
+            padding: 18px 28px;
+            margin-bottom: 36px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            animation: slideUp 0.8s ease-out 0.9s both;
+        }
+        .disclaimer-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+        .disclaimer-text { font-size: 13.5px; color: #ffd580; line-height: 1.7; }
+        .disclaimer-text strong { color: #ffb84d; font-size: 14px; display: block; margin-bottom: 4px; }
+
+        /* ── CHATBOT SECTION ── */
+        .chatbot-section {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 20px; padding: 40px 40px 30px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.8s ease-out 1s both;
+            box-shadow: 0 20px 60px rgba(0,212,255,0.15);
+        }
+        .chatbot-section h2 {
+            text-align: center; font-size: 34px; margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff, #fff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .chatbot-subtitle {
+            text-align: center; color: #a0d4ff; font-size: 14px; margin-bottom: 24px;
+        }
+
+        /* ✅ KEY FIX: flowise-fullchatbot needs explicit height */
+        flowise-fullchatbot {
+            display: block;
+            width: 100%;
+            height: 580px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center; padding: 40px 0 50px;
+            border-top: 1px solid rgba(0,212,255,0.2);
+            animation: slideUp 0.8s ease-out 1.2s both;
+        }
+        .footer-main { color: #a0d4ff; font-size: 14px; margin-bottom: 5px; }
+        .footer-sub  { color: #6a9ab8; font-size: 13px; margin-bottom: 20px; }
+
+        .footer-credit {
+            display: inline-block;
+            padding: 9px 26px;
+            background: rgba(0,212,255,0.07);
+            border: 1px solid rgba(0,212,255,0.25);
+            border-radius: 100px;
+            font-size: 13px; color: #cce8ff;
+            margin-bottom: 14px;
+        }
+        .footer-credit span { color: #00d4ff; font-weight: 700; }
+
+        /* Single row of contact emails */
+        .footer-contacts {
+            display: flex; gap: 12px;
+            justify-content: center; flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .footer-contacts a {
+            color: #7ab8d4; font-size: 13px;
+            text-decoration: none;
+            padding: 6px 16px;
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 100px;
+            transition: all 0.25s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .footer-contacts a:hover {
+            color: #00d4ff;
+            border-color: rgba(0,212,255,0.5);
+            background: rgba(0,212,255,0.07);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 34px; }
+            .hero p  { font-size: 16px; }
+            .chatbot-section { padding: 20px 16px; }
+            .cta-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+            flowise-fullchatbot { height: 480px; }
+            .disclaimer-banner { padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">🚗 GaadiMitra_AI</div>
+        <p style="color:#a0d4ff;margin-top:8px;font-size:15px;">AI-Powered Car Buying Assistant</p>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Find Your Perfect Car Today</h1>
+        <p>Get personalized recommendations based on your budget, preferences &amp; lifestyle</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" onclick="scrollToChatbot()">✨ Start Chat Now</button>
+            <button class="btn btn-secondary" onclick="scrollToChatbot()">Learn More</button>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="feature-card">
+            <span class="feature-icon">⚡</span>
+            <h3>Lightning Fast</h3>
+            <p>Get instant car recommendations tailored to your exact needs</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🎯</span>
+            <h3>Smart Matching</h3>
+            <p>AI algorithm matches you with the best cars from 100+ options</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">💰</span>
+            <h3>Budget Friendly</h3>
+            <p>Find the perfect car within your budget, no compromise</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🛡️</span>
+            <h3>Expert Advice</h3>
+            <p>Get honest pros &amp; cons for every recommendation</p>
+        </div>
+    </section>
+
+    <!-- ⚠️ DISCLAIMER BANNER -->
+    <div class="disclaimer-banner">
+        <div class="disclaimer-icon">⚠️</div>
+        <div class="disclaimer-text">
+            <strong>Important Disclaimer — Please Read Before Using</strong>
+            GaadiMitra AI provides suggestions based on your inputs and general market data. In rare cases, the AI may give inaccurate or outdated information.
+            <strong style="color:#ff9f43;display:inline;font-size:13px;">Always verify your final car choice independently</strong> — check official dealer pricing, test drive the vehicle, and consult a trusted expert before making any purchase decision.
+            The creator of this tool, <strong style="color:#ffcc80;display:inline;">Nil Kumar Bhadani</strong>, is not responsible for any purchase decision made solely on the basis of AI recommendations.
+        </div>
+    </div>
+
+    <!-- CHATBOT -->
+    <section class="chatbot-section" id="chatbot-section">
+        <h2>🤖 Chat with Our AI Advisor</h2>
+        <p class="chatbot-subtitle">Type your budget, preferences or any car-related question below</p>
+
+        <!-- ✅ CORRECT inline embed — initFull renders here, NOT a floating bubble -->
+        <flowise-fullchatbot></flowise-fullchatbot>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-main">© 2026 GaadiMitra AI — Find Your Perfect Car</p>
+        <p class="footer-sub">Powered by AI &nbsp;|&nbsp; Real-time Market Data &nbsp;|&nbsp; Expert Recommendations</p>
+        <div class="footer-credit">
+            Designed &amp; Built by <span>Nil Kumar Bhadani</span>
+        </div>
+        <br>
+        <div class="footer-contacts" id="footer-contacts">
+            <!-- emails injected by JS to prevent spam-bot scraping -->
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    /* ── Particles ── */
+    (function () {
+        var c = document.getElementById('particles');
+        for (var i = 0; i < 50; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top  = Math.random() * 100 + '%';
+            p.style.animationDelay    = Math.random() * 20 + 's';
+            p.style.animationDuration = (20 + Math.random() * 10) + 's';
+            c.appendChild(p);
+        }
+    })();
+
+    /* ── Scroll ── */
+    window.scrollToChatbot = function () {
+        document.getElementById('chatbot-section').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    /* ── Anti-spam email injection ──
+       Emails are assembled at runtime so bots crawling HTML source can't harvest them.
+       Real users see and can click them normally.
+    ── */
+    (function () {
+        var emails = [
+            { icon: '📧', parts: ['nilkumarbhadani', '@', 'gmail.com'] },
+            { icon: '🎓', parts: ['b25bs1225',       '@', 'iitj.ac.in'] }
+        ];
+        var container = document.getElementById('footer-contacts');
+        emails.forEach(function (e) {
+            var address = e.parts.join('');
+            var a = document.createElement('a');
+            a.href = 'mailto:' + address;
+            a.innerHTML = e.icon + ' ' + address;
+            container.appendChild(a);
+        });
+    })();
+</script>
+
+<!-- ✅ initFull = renders INSIDE <flowise-fullchatbot> tag (no floating bubble) -->
+<script type="module">
+    import Chatbot from 'https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js';
+    Chatbot.initFull({
+        chatflowid: "260a6014-6542-4813-be14-c42a284cc72f",
+        apiHost:    "https://cloud.flowiseai.com",
+        theme: {
+            chatWindow: {
+                welcomeMessage: "Namaste! 🚗 Main aapka GaadiMitra AI hoon. Apna budget aur zaroorat batayein — main best car suggest karunga!\n\n⚠️ Note: AI suggestions are for guidance only. Please verify your final choice before purchase.",
+                backgroundColor: "#0d1b2e",
+                fontSize: 15,
+                botMessage: {
+                    backgroundColor: "#112240",
+                    textColor: "#e2f4ff",
+                    showAvatar: true
+                },
+                userMessage: {
+                    backgroundColor: "#0077cc",
+                    textColor: "#ffffff",
+                    showAvatar: false
+                },
+                textInput: {
+                    placeholder: "Apna budget ya car preference batayein...",
+                    backgroundColor: "#0a1628",
+                    textColor: "#ffffff",
+                    sendButtonColor: "#00d4ff"
+                },
+                footer: { text: "", company: "" }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
