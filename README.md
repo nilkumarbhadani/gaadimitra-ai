@@ -42,7 +42,9 @@ It helps users find the best car based on their budget, preferences, and lifesty
 ## 📸 Screenshots  
 
 <img width="1470" height="774" alt="Interface" src="https://github.com/user-attachments/assets/444bbd30-60cf-4f1f-99c5-87134b13a80d" />
-<img width="1470" height="774" alt="Output" src="https://github.com/user-attachments/assets/ecf33f8c-71b2-45a7-b355-167db87b6375" />
+
+<img width="1173" height="760" alt="Advance output " src="https://github.com/user-attachments/assets/c221bd66-80e8-45fe-b04e-8d3052fcf398" />
+
 
 
 ---
